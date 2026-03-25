@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Patrol Points</title>
+  <style>
+    body { background: #111; color: white; font-family: Arial; padding: 20px; }
+    input { margin: 5px; padding: 5px; }
+    button { padding: 8px 12px; margin: 10px 0; }
+    .row { margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+
+<h1>Edit Patrol Points</h1>
+<div id="editor"></div>
+<button onclick="addPatrol()">Add Patrol</button>
+<br>
+<button onclick="saveJSON()">Download Updated JSON</button>
+
+<script>
+let patrols = [];
+
+async function loadJSON() {
+  const response = await fetch("patrols.json?cache=" + Date.now());
+  patrols = await response.json();
+  renderEditor();
+}
+
+function renderEditor() {
+  const editor = document.getElementById("editor");
+  editor.innerHTML = "";
+
+  patrols.forEach((p, i) => {
+    const row = document.createElement("div");
+    row.className = "row";
+
+    row.innerHTML = `
+      <input value="${p.name}" onchange="patrols[${i}].name=this.value">
+      <input type="number" value="${p.points}" onchange="patrols[${i}].points=parseInt(this.value)">
+      <button onclick="deletePatrol(${i})">Delete</button>
+    `;
+
+    editor.appendChild(row);
+  });
+}
+
+function addPatrol() {
+  patrols.push({ name: "New Patrol", points: 0 });
+  renderEditor();
+}
+
+function deletePatrol(i) {
+  patrols.splice(i, 1);
+  renderEditor();
+}
+
+function saveJSON() {
+  const blob = new Blob([JSON.stringify(patrols, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "patrols.json";
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+
+loadJSON();
+</script>
+
+</body>
+</html>
