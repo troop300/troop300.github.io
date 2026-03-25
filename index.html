@@ -15,11 +15,21 @@
       margin-bottom: 20px;
     }
     .entry {
-      background: #222;
       padding: 12px;
       margin: 8px 0;
       border-radius: 6px;
       font-size: 20px;
+      background: #222;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .color-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      margin-left: 10px;
+      border: 1px solid #000;
     }
   </style>
 </head>
@@ -42,7 +52,12 @@ async function loadLeaderboard() {
     patrols.forEach((p, i) => {
       const div = document.createElement("div");
       div.className = "entry";
-      div.textContent = `#${i + 1}: ${p.name.toUpperCase()} — ${p.points}`;
+
+      div.innerHTML = `
+        <span>#${i + 1}: ${p.name.toUpperCase()} — ${p.points}</span>
+        <div class="color-box" style="background:${p.color}"></div>
+      `;
+
       container.appendChild(div);
     });
 
