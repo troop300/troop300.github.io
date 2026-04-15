@@ -1,22 +1,22 @@
 [
   {
     "name": "Atomic Tacos",
-    "points": 5,
+    "points": 7,
     "color": "#FF2A00"
   },
   {
     "name": "Overroasted Marshmellows",
-    "points": 31,
+    "points": 37,
     "color": "#FF9500"
   },
   {
     "name": "French Fry Bandits",
-    "points": 17,
+    "points": 24,
     "color": "#FBFF00"
   },
   {
     "name": "Raging Gators",
-    "points": 13,
+    "points": 17,
     "color": "#00FF04"
   }
 ]
